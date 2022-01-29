@@ -6,51 +6,51 @@ namespace ScoreSaberAPI.Models
     public class Score
     {
         [JsonPropertyName("id")]
-        public int Id;
+        public int Id { get; set; }
 
         [JsonPropertyName("leaderboardPlayerInfo")]
-        public LeaderboardPlayerInfo LeaderboardPlayerInfo;
+        public LeaderboardPlayerInfo LeaderboardPlayerInfo { get; set; }
 
         [JsonPropertyName("rank")]
-        public int Rank;
+        public int Rank { get; set; }
 
         [JsonPropertyName("baseScore")]
-        public int BaseScore;
+        public int BaseScore { get; set; }
 
         [JsonPropertyName("modifiedScore")]
-        public int ModifiedScore;
+        public int ModifiedScore { get; set; }
 
         [JsonPropertyName("pp")]
-        public double Pp;
+        public double Pp { get; set; }
 
         [JsonPropertyName("weight")]
-        public double Weight;
+        public double Weight { get; set; }
 
         [JsonPropertyName("modifiers")]
-        public string Modifiers;
+        public string Modifiers { get; set; }
 
         [JsonPropertyName("multiplier")]
-        public int Multiplier;
+        public int Multiplier { get; set; }
 
         [JsonPropertyName("badCuts")]
-        public int BadCuts;
+        public int BadCuts { get; set; }
 
         [JsonPropertyName("missedNotes")]
-        public int MissedNotes;
+        public int MissedNotes { get; set; }
 
         [JsonPropertyName("maxCombo")]
-        public int MaxCombo;
+        public int MaxCombo { get; set; }
 
         [JsonPropertyName("fullCombo")]
-        public bool FullCombo;
+        public bool FullCombo { get; set; }
 
         [JsonPropertyName("hmd")]
-        public int Hmd;
+        public int Hmd { get; set; }
 
         [JsonPropertyName("timeSet")]
-        public DateTime TimeSet;
+        public DateTime TimeSet { get; set; }
 
         [JsonPropertyName("hasReplay")]
-        public bool HasReplay;
+        public bool HasReplay { get; set; }
     }
 }

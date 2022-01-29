@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace ScoreSaberAPI
 {
-    public class ScoreSaberAPI
+    public class ScoreSaber
     {
         private IHttpClientFactory _httpFactory;
         private HttpClient _httpClient;
@@ -26,13 +26,13 @@ namespace ScoreSaberAPI
 
         private string _scoreSaberDomain;
 
-        public ScoreSaberAPI(IHttpClientFactory httpFactory, string scoreSaberDomain = "scoresaber.com")
+        public ScoreSaber(IHttpClientFactory httpFactory, string scoreSaberDomain = "scoresaber.com")
         {
             _httpFactory = httpFactory;
             _scoreSaberDomain = scoreSaberDomain;
         }
 
-        public ScoreSaberAPI(HttpClient httpClient, string scoreSaberDomain = "scoresaber.com")
+        public ScoreSaber(HttpClient httpClient, string scoreSaberDomain = "scoresaber.com")
         {
             _httpClient = httpClient;
             _scoreSaberDomain = scoreSaberDomain;
@@ -179,8 +179,6 @@ namespace ScoreSaberAPI
         {
             return await _http.GetFromJsonAsync<Player>($"https://{_scoreSaberDomain}/api/player/{playerId}/full");
         }
-
-
 
         public async Task<GetPlayerScoresResponse> GetPlayerScores(long? playerId, int? limit = null, ScoresSort? sort = null, int? page = null, bool? withMetadata = null)
         {

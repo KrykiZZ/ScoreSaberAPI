@@ -7,9 +7,9 @@ namespace ScoreSaberAPI.Responses
     public class GetPlayersResponse
     {
         [JsonPropertyName("players")]
-        public List<Player> Players;
+        public List<Player> Players { get; set; }
 
         [JsonPropertyName("metadata")]
-        public Metadata Metadata;
+        public Metadata Metadata { get; set; }
     }
 }

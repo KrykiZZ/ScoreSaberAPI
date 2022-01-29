@@ -7,9 +7,9 @@ namespace ScoreSaberAPI.Responses
     public class GetLeaderboardsScoresResponse
     {
         [JsonPropertyName("scores")]
-        public List<Score> Scores;
+        public List<Score> Scores { get; set; }
 
         [JsonPropertyName("metadata")]
-        public Metadata Metadata;
+        public Metadata Metadata { get; set; }
     }
 }

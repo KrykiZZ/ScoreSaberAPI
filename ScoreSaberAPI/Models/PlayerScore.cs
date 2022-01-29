@@ -5,9 +5,9 @@ namespace ScoreSaberAPI.Models
     public class PlayerScore
     {
         [JsonPropertyName("score")]
-        public Score Score;
+        public Score Score { get; set; }
 
         [JsonPropertyName("leaderboard")]
-        public LeaderboardInfo Leaderboard;
+        public LeaderboardInfo Leaderboard { get; set; }
     }
 }

@@ -6,45 +6,45 @@ namespace ScoreSaberAPI.Models
     public class Player
     {
         [JsonPropertyName("id")]
-        public string Id;
+        public string Id { get; set; }
 
         [JsonPropertyName("name")]
-        public string Name;
+        public string Name { get; set; }
 
         [JsonPropertyName("profilePicture")]
-        public string ProfilePicture;
+        public string ProfilePicture { get; set; }
 
         [JsonPropertyName("country")]
-        public string Country;
+        public string Country { get; set; }
 
         [JsonPropertyName("pp")]
-        public double PP;
+        public double PP { get; set; }
 
         [JsonPropertyName("rank")]
-        public int Rank;
+        public int Rank { get; set; }
 
         [JsonPropertyName("countryRank")]
-        public int CountryRank;
+        public int CountryRank { get; set; }
 
         [JsonPropertyName("role")]
-        public string Role;
+        public string Role { get; set; }
 
         [JsonPropertyName("badges")]
-        public List<Badge> Badges;
+        public List<Badge> Badges { get; set; }
 
         [JsonPropertyName("histories")]
-        public string Histories;
+        public string Histories { get; set; }
 
         [JsonPropertyName("permissions")]
-        public int Permissions;
+        public int Permissions { get; set; }
 
         [JsonPropertyName("banned")]
-        public bool Banned;
+        public bool Banned { get; set; }
 
         [JsonPropertyName("inactive")]
-        public bool Inactive;
+        public bool Inactive { get; set; }
 
         [JsonPropertyName("scoreStats")]
-        public ScoreStats ScoreStats;
+        public ScoreStats ScoreStats { get; set; }
     }
 }

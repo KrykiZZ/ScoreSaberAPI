@@ -5,21 +5,21 @@ namespace ScoreSaberAPI.Models
     public class ScoreStats
     {
         [JsonPropertyName("totalScore")]
-        public long TotalScore;
+        public long TotalScore { get; set; }
 
         [JsonPropertyName("totalRankedScore")]
-        public long TotalRankedScore;
+        public long TotalRankedScore { get; set; }
 
         [JsonPropertyName("averageRankedAccuracy")]
-        public double AverageRankedAccuracy;
+        public double AverageRankedAccuracy { get; set; }
 
         [JsonPropertyName("totalPlayCount")]
-        public int TotalPlayCount;
+        public int TotalPlayCount { get; set; }
 
         [JsonPropertyName("rankedPlayCount")]
-        public int RankedPlayCount;
+        public int RankedPlayCount { get; set; }
 
         [JsonPropertyName("replaysWatched")]
-        public int ReplaysWatched;
+        public int ReplaysWatched { get; set; }
     }
 }
