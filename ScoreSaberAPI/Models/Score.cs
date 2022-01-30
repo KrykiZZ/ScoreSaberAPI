@@ -21,7 +21,7 @@ namespace ScoreSaberAPI.Models
         public int ModifiedScore { get; set; }
 
         [JsonPropertyName("pp")]
-        public double Pp { get; set; }
+        public double PP { get; set; }
 
         [JsonPropertyName("weight")]
         public double Weight { get; set; }

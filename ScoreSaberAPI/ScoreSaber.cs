@@ -12,8 +12,9 @@ namespace ScoreSaberAPI
 {
     public class ScoreSaber
     {
-        private IHttpClientFactory _httpFactory;
-        private HttpClient _httpClient;
+        private readonly IHttpClientFactory _httpFactory;
+        private readonly HttpClient _httpClient;
+        private readonly string _httpClientName;
 
         private HttpClient _http
         {
@@ -21,15 +22,16 @@ namespace ScoreSaberAPI
             {
                 if (_httpClient != null)
                     return _httpClient;
-                else return _httpFactory.CreateClient();
+                else return string.IsNullOrWhiteSpace(_httpClientName) ? _httpFactory.CreateClient() : _httpFactory.CreateClient(_httpClientName);
             }
         }
 
         private string _scoreSaberDomain;
 
-        public ScoreSaber(IHttpClientFactory httpFactory, string scoreSaberDomain = "scoresaber.com")
+        public ScoreSaber(IHttpClientFactory httpFactory, string httpClientName = null, string scoreSaberDomain = "scoresaber.com")
         {
             _httpFactory = httpFactory;
+            _httpClientName = httpClientName;
             _scoreSaberDomain = scoreSaberDomain;
         }
 
@@ -205,6 +207,11 @@ namespace ScoreSaberAPI
             if (query.Count > 0)
                 return $"{url}?{string.Concat(query.Select(x => $"&{x.Key}={x.Value}")).Remove(0, 1)}";
             return url;
+        }
+
+        public async Task<string> Test()
+        {
+            return await (await _http.GetAsync("http://ip-api.com/json")).Content.ReadAsStringAsync();
         }
     }
 }
