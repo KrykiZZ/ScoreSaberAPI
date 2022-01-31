@@ -53,16 +53,16 @@ namespace ScoreSaberAPI
                 query.Add("search", search);
 
             if (verified != null)
-                query.Add("verified", verified.ToString());
+                query.Add("verified", verified.Value ? "true" : "false");
 
             if (ranked != null)
-                query.Add("ranked", ranked.ToString());
+                query.Add("ranked", ranked.Value ? "true" : "false");
 
             if (qualified != null)
-                query.Add("qualified", qualified.ToString());
+                query.Add("qualified", qualified.Value ? "true" : "false");
 
             if (loved != null)
-                query.Add("loved", loved.ToString());
+                query.Add("loved", loved.Value ? "true" : "false");
 
             if (minStar != null)
                 query.Add("minStar", minStar.ToString());
@@ -77,13 +77,13 @@ namespace ScoreSaberAPI
                 query.Add("category", category.ToString());
 
             if (unique != null)
-                query.Add("unique", unique.ToString());
+                query.Add("unique", unique.Value ? "true" : "false");
 
             if (page != null)
                 query.Add("page", page.ToString());
 
             if (withMetadata != null)
-                query.Add("withMetadata", withMetadata.ToString());
+                query.Add("withMetadata", withMetadata.Value ? "true" : "false");
 
             return await _http.GetFromJsonAsync<GetLeaderboardsResponse>(BuildUrl($"https://{_scoreSaberDomain}/api/leaderboards", query));
         }
@@ -115,7 +115,7 @@ namespace ScoreSaberAPI
                 query.Add("page", page.ToString());
 
             if (withMetadata != null)
-                query.Add("withMetadata", withMetadata.ToString());
+                query.Add("withMetadata", withMetadata.Value ? "true" : "false");
 
             return await _http.GetFromJsonAsync<GetLeaderboardsScoresResponse>(BuildUrl($"https://{_scoreSaberDomain}/api/leaderboard/by-id/{leaderboardId}/scores", query));
         }
@@ -133,7 +133,7 @@ namespace ScoreSaberAPI
                 query.Add("page", page.ToString());
 
             if (withMetadata != null)
-                query.Add("withMetadata", withMetadata.ToString());
+                query.Add("withMetadata", withMetadata.Value ? "true" : "false");
 
             return await _http.GetFromJsonAsync<GetLeaderboardsScoresResponse>(BuildUrl($"https://{_scoreSaberDomain}/api/leaderboard/by-hash/{hash}/scores?difficulty={(int)difficulty}", query));
         }
@@ -156,7 +156,7 @@ namespace ScoreSaberAPI
                 query.Add("countries", countries);
 
             if (withMetadata != null)
-                query.Add("withMetadata", withMetadata.ToString());
+                query.Add("withMetadata", withMetadata.Value ? "true" : "false");
 
             return await _http.GetFromJsonAsync<GetPlayersResponse>(BuildUrl($"https://{_scoreSaberDomain}/api/players", query));
         }
@@ -197,21 +197,16 @@ namespace ScoreSaberAPI
                 query.Add("page", page.ToString());
 
             if (withMetadata != null)
-                query.Add("withMetadata", withMetadata.ToString());
+                query.Add("withMetadata", withMetadata.Value ? "true" : "false");
 
             return await _http.GetFromJsonAsync<GetPlayerScoresResponse>(BuildUrl($"https://{_scoreSaberDomain}/api/player/{playerId}/scores", query));
         }
 
-        public string BuildUrl(string url, Dictionary<string, string> query)
+        private string BuildUrl(string url, Dictionary<string, string> query)
         {
             if (query.Count > 0)
                 return $"{url}?{string.Concat(query.Select(x => $"&{x.Key}={x.Value}")).Remove(0, 1)}";
             return url;
-        }
-
-        public async Task<string> Test()
-        {
-            return await (await _http.GetAsync("http://ip-api.com/json")).Content.ReadAsStringAsync();
         }
     }
 }
