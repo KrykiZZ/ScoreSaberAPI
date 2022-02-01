@@ -15,6 +15,7 @@ namespace ScoreSaberAPI
         private readonly IHttpClientFactory _httpFactory;
         private readonly HttpClient _httpClient;
         private readonly string _httpClientName;
+        private readonly bool _useHttps;
 
         private HttpClient _http
         {
@@ -28,17 +29,19 @@ namespace ScoreSaberAPI
 
         private string _scoreSaberDomain;
 
-        public ScoreSaber(IHttpClientFactory httpFactory, string httpClientName = null, string scoreSaberDomain = "scoresaber.com")
+        public ScoreSaber(IHttpClientFactory httpFactory, string httpClientName = null, string scoreSaberDomain = "scoresaber.com", bool useHttps = true)
         {
             _httpFactory = httpFactory;
             _httpClientName = httpClientName;
             _scoreSaberDomain = scoreSaberDomain;
+            _useHttps = useHttps;
         }
 
-        public ScoreSaber(HttpClient httpClient, string scoreSaberDomain = "scoresaber.com")
+        public ScoreSaber(HttpClient httpClient, string scoreSaberDomain = "scoresaber.com", bool useHttps = true)
         {
             _httpClient = httpClient;
             _scoreSaberDomain = scoreSaberDomain;
+            _useHttps = useHttps;
         }
 
         public async Task<GetLeaderboardsResponse> GetLeaderboards(
@@ -85,12 +88,12 @@ namespace ScoreSaberAPI
             if (withMetadata != null)
                 query.Add("withMetadata", withMetadata.Value ? "true" : "false");
 
-            return await _http.GetFromJsonAsync<GetLeaderboardsResponse>(BuildUrl($"https://{_scoreSaberDomain}/api/leaderboards", query));
+            return await _http.GetFromJsonAsync<GetLeaderboardsResponse>(BuildUrl($"{(_useHttps ? "https" : "http")}://{_scoreSaberDomain}/api/leaderboards", query));
         }
 
         public async Task<LeaderboardInfo> GetLeaderboard(int id)
         {
-            return await _http.GetFromJsonAsync<LeaderboardInfo>($"https://{_scoreSaberDomain}/api/leaderboard/by-id/{id}/info");
+            return await _http.GetFromJsonAsync<LeaderboardInfo>($"{(_useHttps ? "https" : "http")}://{_scoreSaberDomain}/api/leaderboard/by-id/{id}/info");
         }
 
         public async Task<LeaderboardInfo> GetLeaderboard(string hash, Difficulty difficulty, string gameMode = null)
@@ -99,7 +102,7 @@ namespace ScoreSaberAPI
             if (gameMode != null)
                 query.Add("gameMode", gameMode);
 
-            return await _http.GetFromJsonAsync<LeaderboardInfo>(BuildUrl($"https://{_scoreSaberDomain}/api/leaderboard/by-hash/{hash}/info?difficulty={(int)difficulty}", query));
+            return await _http.GetFromJsonAsync<LeaderboardInfo>(BuildUrl($"{(_useHttps ? "https" : "http")}://{_scoreSaberDomain}/api/leaderboard/by-hash/{hash}/info?difficulty={(int)difficulty}", query));
         }
 
         public async Task<GetLeaderboardsScoresResponse> GetScores(int leaderboardId, string countries = null, string search = null, int? page = null, bool? withMetadata = null)
@@ -117,7 +120,7 @@ namespace ScoreSaberAPI
             if (withMetadata != null)
                 query.Add("withMetadata", withMetadata.Value ? "true" : "false");
 
-            return await _http.GetFromJsonAsync<GetLeaderboardsScoresResponse>(BuildUrl($"https://{_scoreSaberDomain}/api/leaderboard/by-id/{leaderboardId}/scores", query));
+            return await _http.GetFromJsonAsync<GetLeaderboardsScoresResponse>(BuildUrl($"{(_useHttps ? "https" : "http")}://{_scoreSaberDomain}/api/leaderboard/by-id/{leaderboardId}/scores", query));
         }
 
         public async Task<GetLeaderboardsScoresResponse> GetScores(string hash, Difficulty difficulty, string countries = null, string search = null, int? page = null, bool? withMetadata = null)
@@ -135,12 +138,12 @@ namespace ScoreSaberAPI
             if (withMetadata != null)
                 query.Add("withMetadata", withMetadata.Value ? "true" : "false");
 
-            return await _http.GetFromJsonAsync<GetLeaderboardsScoresResponse>(BuildUrl($"https://{_scoreSaberDomain}/api/leaderboard/by-hash/{hash}/scores?difficulty={(int)difficulty}", query));
+            return await _http.GetFromJsonAsync<GetLeaderboardsScoresResponse>(BuildUrl($"{(_useHttps ? "https" : "http")}://{_scoreSaberDomain}/api/leaderboard/by-hash/{hash}/scores?difficulty={(int)difficulty}", query));
         }
 
         public async Task<List<LeaderboardDifficulty>> GetDifficulties(string hash)
         {
-            return await _http.GetFromJsonAsync<List<LeaderboardDifficulty>>($"https://{_scoreSaberDomain}/api/leaderboard/get-difficulties/{hash}");
+            return await _http.GetFromJsonAsync<List<LeaderboardDifficulty>>($"{(_useHttps ? "https" : "http")}://{_scoreSaberDomain}/api/leaderboard/get-difficulties/{hash}");
         }
 
         public async Task<GetPlayersResponse> GetPlayers(string search = null, int? page = null, string countries = null, bool? withMetadata = null)
@@ -158,7 +161,7 @@ namespace ScoreSaberAPI
             if (withMetadata != null)
                 query.Add("withMetadata", withMetadata.Value ? "true" : "false");
 
-            return await _http.GetFromJsonAsync<GetPlayersResponse>(BuildUrl($"https://{_scoreSaberDomain}/api/players", query));
+            return await _http.GetFromJsonAsync<GetPlayersResponse>(BuildUrl($"{(_useHttps ? "https" : "http")}://{_scoreSaberDomain}/api/players", query));
         }
 
         public async Task<int> GetPlayersCount(string search = null, string countries = null)
@@ -170,17 +173,17 @@ namespace ScoreSaberAPI
             if (countries != null)
                 query.Add("countries", countries);
 
-            return Convert.ToInt32(await _http.GetStringAsync(BuildUrl($"https://{_scoreSaberDomain}/api/players/count", query)));
+            return Convert.ToInt32(await _http.GetStringAsync(BuildUrl($"{(_useHttps ? "https" : "http")}://{_scoreSaberDomain}/api/players/count", query)));
         }
 
         public async Task<Player> GetPlayerBasic(long? playerId)
         {
-            return await _http.GetFromJsonAsync<Player>($"https://{_scoreSaberDomain}/api/player/{playerId}/basic");
+            return await _http.GetFromJsonAsync<Player>($"{(_useHttps ? "https" : "http")}://{_scoreSaberDomain}/api/player/{playerId}/basic");
         }
 
         public async Task<Player> GetPlayerFull(long? playerId)
         {
-            return await _http.GetFromJsonAsync<Player>($"https://{_scoreSaberDomain}/api/player/{playerId}/full");
+            return await _http.GetFromJsonAsync<Player>($"{(_useHttps ? "https" : "http")}://{_scoreSaberDomain}/api/player/{playerId}/full");
         }
 
         public async Task<GetPlayerScoresResponse> GetPlayerScores(long? playerId, int? limit = null, ScoresSort? sort = null, int? page = null, bool? withMetadata = null)
@@ -199,7 +202,7 @@ namespace ScoreSaberAPI
             if (withMetadata != null)
                 query.Add("withMetadata", withMetadata.Value ? "true" : "false");
 
-            return await _http.GetFromJsonAsync<GetPlayerScoresResponse>(BuildUrl($"https://{_scoreSaberDomain}/api/player/{playerId}/scores", query));
+            return await _http.GetFromJsonAsync<GetPlayerScoresResponse>(BuildUrl($"{(_useHttps ? "https" : "http")}://{_scoreSaberDomain}/api/player/{playerId}/scores", query));
         }
 
         private string BuildUrl(string url, Dictionary<string, string> query)
